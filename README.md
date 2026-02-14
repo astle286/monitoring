@@ -1,4 +1,6 @@
-Here’s a **full, polished README.md** for your monitoring stack, with consistent formatting, clear sections, and an ASCII diagram to show the architecture flow:
+## 🎥 Demo Video
+
+[![Watch the demo](assets/tumb.png)](https://youtu.be/2geybYmuRPM?si=ZGSRgOe1NegnGBLF)
 
 ```markdown
 # Monitoring Stack with Prometheus, Alertmanager, Node Exporter, and Grafana
@@ -86,43 +88,7 @@ This project sets up a complete monitoring stack using Docker Compose. It includ
 ## 🔗 Architecture Flow
 
 ```
-                +-------------------+
-                |   Node Exporter   |
-                |   (Host Metrics)  |
-                +-------------------+
-                         |
-                         v
-+-------------------+    +-------------------+    +-------------------+
-|   Expense Calc    |    |   Chart App       |    |   DevOps Helper   |
-|   (App Metrics)   |    |   (App Metrics)   |    |   (App Metrics)   |
-+-------------------+    +-------------------+    +-------------------+
-                         |
-                         v
-                   +-------------------+
-                   |    Prometheus     |
-                   |   (Scrapes Data)  |
-                   +-------------------+
-                         |
-                         v
-                   +-------------------+
-                   |   Alertmanager    |
-                   | (Routes Alerts)   |
-                   +-------------------+
-                         |
-          +---------------------------+
-          |                           |
-          v                           v
-+-------------------+        +-------------------+
-| Discord Critical  |        | Discord Warning   |
-|   (Alerts)        |        |   (Alerts)        |
-+-------------------+        +-------------------+
-
-                         |
-                         v
-                   +-------------------+
-                   |     Grafana       |
-                   | (Dashboards/Vis)  |
-                   +-------------------+
+![Architecture Flow](assets/flow.png)
 ```
 
 ---
