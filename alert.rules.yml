@@ -1,0 +1,91 @@
+groups:
+  - name: pc-Down
+    interval: 10s
+    rules:
+      - alert: ExpenseDown
+        expr: up{job="expense_calculator"} == 0
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Expense Calculator app is down"
+          description: "Prometheus not able to connect expense_calculator for 10s."
+
+      - alert: chartDown
+        expr: up{job="chart_app"} == 0
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: "chart app is down"
+          description: "Prometheus not able to connect chart_app for 10s."
+      
+      - alert: helperDown
+        expr: up{job="devops_helper"} == 0
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: "devops_helper app is down"
+          description: "Prometheus not able to connect devops_helper for 10s."
+
+  - name: Alerts-For-Expense
+    interval: 10s
+    rules:
+      - alert: HighCPUUsage 
+        expr: rate(process_cpu_seconds_total{job="expense_calculator"}[30s]) > 0.1 
+        for: 10s 
+        labels: 
+          severity: warning 
+        annotations: 
+          summary: "High CPU usage detected" 
+          description: "CPU usage exceeded 0.1 cores over the last 10s."
+
+      - alert: TooManyOpenFDs 
+        expr: process_open_fds{job="expense_calculator"} > 15 
+        for: 10s 
+        labels: 
+          severity: warning 
+        annotations: 
+          summary: "Too many open file descriptors" 
+          description: "Open file descriptors exceeded 15."
+
+      - alert: HighHttpErrors 
+        expr: increase(flask_http_request_total{status="404" , job="expense_calculator"}[1m]) > 1 
+        for: 30s 
+        labels: 
+          severity: warning 
+        annotations: 
+          summary: "High HTTP error rate" 
+          description: "More than 1 HTTP 404 errors in the last 1 minute."
+
+  - name: Alerts-For-chart
+    interval: 10s
+    rules:
+      - alert: HighCPUUsage 
+        expr: rate(process_cpu_seconds_total{job="chart_app"}[30s]) > 0.1 
+        for: 10s 
+        labels: 
+          severity: warning 
+        annotations: 
+          summary: "High CPU usage detected" 
+          description: "CPU usage exceeded 0.1 cores over the last 10s."
+
+      - alert: TooManyOpenFDs 
+        expr: process_open_fds{job="chart_app"} > 15 
+        for: 10s 
+        labels: 
+          severity: warning 
+        annotations: 
+          summary: "Too many open file descriptors" 
+          description: "Open file descriptors exceeded 15."
+
+      - alert: HighHttpErrors 
+        expr: increase(flask_http_request_total{status="404" , job="chart_app"}[1m]) > 1 
+        for: 30s 
+        labels: 
+          severity: warning 
+        annotations: 
+          summary: "High HTTP error rate" 
+          description: "More than 1 HTTP 404 errors in the last 1 minute."
+

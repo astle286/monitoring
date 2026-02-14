@@ -1,0 +1,30 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: 'discord-warning'
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1h
+  routes:
+    - receiver: "discord-critical"
+      matchers:
+        - severity="critical"
+    - receiver: "discord-warning"
+      matchers:
+        - severity="warning"
+
+receivers:
+  - name: 'discord-critical'
+    discord_configs:
+      - webhook_url: '${DISCORD_CRITICAL_WEBHOOK}'
+        title: '{{ .CommonAnnotations.summary }}'
+        message: 'Severity: {{ .CommonLabels.severity }} | {{ .CommonAnnotations.description }}'
+        send_resolved: true
+
+  - name: 'discord-warning'
+    discord_configs:
+      - webhook_url: '${DISCORD_WARNING_WEBHOOK}'
+        title: '{{ .CommonAnnotations.summary }}'
+        message: 'warning: {{ .CommonLabels.severity }} | {{ .CommonAnnotations.description }}'
+        send_resolved: true
